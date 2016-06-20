@@ -1,4 +1,6 @@
-Base 64 Decoder
+# Base 64 Decoder
+
+http://luciopaiva.github.io/base64
 
 A simple, robust base 64 decoder made using vanilla Javascript (well, Typescript actually). Just paste the encoded
 string in the left panel and see the output in the right panel. If the input has any invalid characters, they will be
