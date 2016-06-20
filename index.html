@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="third-party/bootstrap.min.css">
+    <link rel="stylesheet" href="index.css">
+
+    <title>Base64 Decode Online</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <h1>Base64 Decode</h1>
+        <p>A simple, robust base 64 decoder made using vanilla Javascript (well, Typescript actually). Just paste the encoded
+            string in the left panel and see the output in the right panel. If the input has any invalid characters, they will be
+            used to split the input into smaller parts and the algorithm will try to decode them separately.
+
+            Moreover, if the output is valid JSON, the script will format it using proper indentation.</p>
+        <hr/>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <textarea class="form-control" id="input" rows="30"></textarea>
+        </div>
+        <div class="col-md-6">
+            <textarea class="form-control" id="output" rows="30" readonly></textarea>
+        </div>
+    </div>
+</div>
+
+<script src="dist/index.js"></script>
+
+</body>
+</html>
