@@ -1,20 +1,18 @@
+"use strict";
+
 
 class Base64DecoderApp {
 
-    private inputBox: HTMLInputElement;
-    private outputBox: HTMLInputElement;
-    private lastDecodedInput: string;
-
-    constructor (inputId: string, outputId: string) {
-        this.inputBox = document.getElementById(inputId) as HTMLInputElement;
-        this.outputBox = document.getElementById(outputId) as HTMLInputElement;
+    constructor (inputId, outputId) {
+        this.inputBox = document.getElementById(inputId);
+        this.outputBox = document.getElementById(outputId);
         this.lastDecodedInput = null;
 
-        this.inputBox.onkeyup = (ev: KeyboardEvent) => { this.decode() };
-        this.inputBox.onmouseup = (ev: MouseEvent) => { this.decode() };
+        this.inputBox.addEventListener('keyup', () => this.decode());
+        this.inputBox.addEventListener('mouseup', () => this.decode());
     }
 
-    private decode() {
+    decode() {
         let encodedMultiPart = this.inputBox.value;
 
         if (this.lastDecodedInput === encodedMultiPart) {
@@ -22,9 +20,10 @@ class Base64DecoderApp {
             return;
         }
 
-        let decoded: string[] = [];
+        let decoded = [];
 
-        encodedMultiPart.split(/[^A-Za-z0-9+/=]+/).forEach((encodedPart: string) => {
+        encodedMultiPart = encodedMultiPart.replace(/\s+/, '');
+        encodedMultiPart.replace(/\s+/, '').split(/[^A-Za-z0-9+/=]+/).forEach(encodedPart => {
             let decodedPart = Base64DecoderApp.tryJsonDecode(Base64DecoderApp.tryBase64Decode(encodedPart));
             decoded.push(decodedPart);
         });
@@ -32,8 +31,8 @@ class Base64DecoderApp {
         this.outputBox.value = decoded.join('\n------------------------------\n');
     }
 
-    private static tryBase64Decode(inputStr: string): string {
-        let result: string;
+    static tryBase64Decode(inputStr) {
+        let result;
         try {
             result = window.atob(inputStr);
         } catch (e) {
@@ -47,8 +46,8 @@ class Base64DecoderApp {
         return result;
     }
 
-    private static tryJsonDecode(inputStr: string): string {
-        let result: string;
+    static tryJsonDecode(inputStr) {
+        let result;
         try {
             result = JSON.stringify(JSON.parse(inputStr), null, 2);
         } catch (e) {

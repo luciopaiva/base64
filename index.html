@@ -2,16 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="third-party/bootstrap.min.css">
-    <link rel="stylesheet" href="index.css">
+    <title>Online Base64 Decoder</title>
 
-    <title>Base64 Decode Online</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style>
+        textarea {
+            width: 100%;
+        }
+    </style>
+
+    <script src="index.js" defer></script>
 </head>
 <body>
 
 <div class="container">
     <div class="row">
-        <h1>Base64 Decode</h1>
+        <h1>Online Base64 Decoder</h1>
         <p>A simple, robust base 64 decoder made using vanilla Javascript (well, Typescript actually). Just paste the encoded
             string in the left panel and see the output in the right panel. If the input has any invalid characters, they will be
             used to split the input into smaller parts and the algorithm will try to decode them separately.
@@ -29,8 +35,6 @@
         </div>
     </div>
 </div>
-
-<script src="dist/index.js"></script>
 
 </body>
 </html>
