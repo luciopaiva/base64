@@ -6,7 +6,7 @@ class Base64DecoderApp {
     constructor (inputId, outputId) {
         this.inputBox = document.getElementById(inputId);
         this.outputBox = document.getElementById(outputId);
-        this.lastDecodedInput = null;
+        this.lastEncodedInput = null;
 
         this.inputBox.addEventListener('keyup', () => this.decode());
         this.inputBox.addEventListener('mouseup', () => this.decode());
@@ -15,19 +15,24 @@ class Base64DecoderApp {
     decode() {
         let encodedMultiPart = this.inputBox.value;
 
-        if (this.lastDecodedInput === encodedMultiPart) {
+        if (this.lastEncodedInput === encodedMultiPart) {
             // nothing changed since the last decoding
             return;
         }
 
         let decoded = [];
 
-        encodedMultiPart = encodedMultiPart.replace(/\s+/, '');
-        encodedMultiPart.replace(/\s+/, '').split(/[^A-Za-z0-9+/=]+/).forEach(encodedPart => {
-            let decodedPart = Base64DecoderApp.tryJsonDecode(Base64DecoderApp.tryBase64Decode(encodedPart));
-            decoded.push(decodedPart);
-        });
+        encodedMultiPart
+            .replace(/\s+/g, '')
+            .replace(/-/g, '+')  // convert base64 url encoding to regular base64 encoding
+            .replace(/_/g, '/')  //
+            .split(/[^A-Za-z0-9+/=]+/)
+            .forEach(encodedPart => {
+                let decodedPart = Base64DecoderApp.tryJsonDecode(Base64DecoderApp.tryBase64Decode(encodedPart));
+                decoded.push(decodedPart);
+            });
 
+        this.lastEncodedInput = encodedMultiPart;
         this.outputBox.value = decoded.join('\n------------------------------\n');
     }
 
@@ -37,11 +42,6 @@ class Base64DecoderApp {
             result = window.atob(inputStr);
         } catch (e) {
             result = inputStr;
-            //if (e instanceof DOMException && e.name === 'InvalidCharacterError') {
-            //    console.error('Invalid base 64 input');
-            //} else {
-            //    console.dir(e);
-            //}
         }
         return result;
     }
